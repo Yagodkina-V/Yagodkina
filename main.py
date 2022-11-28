@@ -271,5 +271,5 @@ if user_waiting.lower() == 'вакансии':
 elif user_waiting.lower() == 'статистика':
     report.generate_excel()
 else:
-    print("Некорректный формат требуемого вывода")
+    print("Некорректный формат вывода")
 
