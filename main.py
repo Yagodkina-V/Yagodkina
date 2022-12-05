@@ -5,11 +5,32 @@ import numpy as np
 
 
 class DataSet:
+    ''' Класс для парсинга csv и создания словарей.
+
+    Attributes:
+        file_name (str): название файла
+        profession_name (str): профессия, для которой производится выборка
+    '''
     def __init__(self, file_name, profession_name):
+        ''' Инициализирует объект DataSet.
+        Args:
+            file_name (str): название файла
+            profession_name (str): профессия, для которой производится выборка
+        '''
         self.file_name = file_name
         self.profession_name = profession_name
 
     def parse_csv(self):
+        ''' Парсит csv и создает словари для дальнейшей работы
+
+        :returns:
+            dict: распределение средней зарплаты по годам
+            dict: распределение кол-ва вакансий по годам
+            dict: распределение средней зарплаты по годам для выбранной профессии
+            dict: распределение кол-ва вакансий по годам для выбранной профессии
+            dict: распределение средней зарплаты по городам, топ 10
+            dict: распределение доли вакансий по городам (в процентах), топ 10
+        '''
         with open(self.file_name, encoding='utf-8-sig') as file:
             reader = csv.reader(file)
             titles, data = [], []
@@ -65,18 +86,39 @@ class DataSet:
 
 
 class Vacancy:
+    ''' Класс для представления вакансий.
+        Attributes:
+            name (str): название вакансии
+            salary (экземпляр класса Salary): данные о зарплате
+            area_name (str): место публикации вакансии
+            published_at (str): дата и время публикации
+    '''
     def __init__(self, dct):
+        '''Инициализирует объект Vacancy.
+            Args:
+                dct (dict): словарь содержащий ключи из 1 сторки файла и значения - одна конкретная вакансия
+        '''
         self.name = dct['name']
         self.salary = Salary(dct['salary_from'], dct['salary_to'], dct['salary_currency'])
         self.area_name = dct['area_name']
         self.published_at = dct['published_at']
 
     def get_average(self):
+        ''' Вычисляет среднюю зарплату в рублях (конвертация с помоью словаря currency_to_rub)
+        :returns:
+            float: средняя зарплата в рублях
+        '''
         return 0.5 * (self.salary.salary_from * self.salary.currency_to_rub[self.salary.salary_currency] +
                       self.salary.salary_to * self.salary.currency_to_rub[self.salary.salary_currency])
 
 
 class Salary:
+    '''Класс для представления зарплаты.
+    Attributes:
+        salary_from (float): нижняя граница вилки оклада
+        salary_to (float): верхняя граница вилки оклада
+        salary_currency (str): валюта оклада
+    '''
     currency_to_rub = {
         "AZN": 35.68,
         "BYR": 23.91,
@@ -91,14 +133,38 @@ class Salary:
     }
 
     def __init__(self, salary_from, salary_to, salary_currency):
+        ''' Инициализирует объект Salary.
+        Args:
+         salary_from (str or int or float): нижняя граница вилки оклада
+         salary_to (str or int or float): верхняя граница вилки оклада
+         salary_currency (str): валюта оклада
+        '''
         self.salary_from = float(salary_from)
         self.salary_to = float(salary_to)
         self.salary_currency = salary_currency
 
 
 class Report:
+    '''Класс для формирования отчета.
+        Attributes:
+            dct_years_salary (dict): распределение уровня  средних зарплат по годам
+            dct_years_count (dict): распределение количества вакансий по годам
+            dct_years_salary_filt (dict): распределение уровня  средних зарплат по годам для выбранной профессии
+            dct_years_count_filt (dict): распределение количества вакансий по годам для выбранной профессии
+            dct_salary_by_sity (dict): распределение уровня средних зарплат по городам
+            dct_part (dict): доля вакансий по городам (в процентах)
+    '''
     def __init__(self, dct_years_salary, dct_years_count, dct_years_salary_filt, dct_years_count_filt,
                  dct_salary_by_sity, dct_part):
+        '''Инициализирует объект Report.
+            Args:
+                dct_years_salary (dict): распределение уровня  средних зарплат по годам
+                dct_years_count (dict): распределение количества вакансий по годам
+                dct_years_salary_filt (dict): распределение уровня  средних зарплат по годам для выбранной профессии
+                dct_years_count_filt (dict): распределение количества вакансий по годам для выбранной профессии
+                dct_salary_by_sity (list): распределение уровня средних зарплат по городам
+                dct_part (list): доля вакансий по городам (в процентах)
+        '''
         self.dct_years_salary = dct_years_salary
         self.dct_years_count = dct_years_count
         self.dct_years_salary_filt = dct_years_salary_filt
@@ -107,6 +173,11 @@ class Report:
         self.dct_part = dct_part
 
     def generate_excel(self):
+        '''Формирует отчет в виде таблицы.
+
+        :returns:
+            file (.xlsx): 'rep.xlsx'
+        '''
         wb = openpyxl.Workbook()
         font = openpyxl.styles.Font(bold=True)
         thin = openpyxl.styles.Side(border_style="thin", color="000000")
@@ -192,6 +263,11 @@ class Report:
 
 
     def generate_image(self):
+        ''' Формирует отчет в виде графиков (изображение).
+
+        :returns:
+            file (.png): 'graph.png'
+        '''
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2)
         index = np.arange(len(self.dct_years_salary))
         index2 = np.arange(10)
