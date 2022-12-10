@@ -302,7 +302,6 @@ class Report:
 
         wb.save('rep.xlsx')
 
-
     def generate_image(self):
         ''' Формирует отчет в виде графиков (изображение).
 
