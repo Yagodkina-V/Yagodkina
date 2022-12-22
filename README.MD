@@ -27,3 +27,6 @@
 ![16proc.png](16proc.png)
 3) с 4 процессами
 ![4proc.png](4proc.png)
+
+# Результат работы с Concurrent futures
+![con-fut.png](con-fut.png)
