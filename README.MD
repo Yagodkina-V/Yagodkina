@@ -30,3 +30,6 @@
 
 # Результат работы с Concurrent futures
 ![con-fut.png](con-fut.png)
+
+# Частотность встречающихся валют 
+![frequency.png](frequency.png)
