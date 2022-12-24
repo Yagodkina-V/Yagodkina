@@ -1,10 +1,10 @@
 # Результат doctest
 
-![](img.png)
+![](img/img.png)
 
 # Результат unittest
 
-![](img_1.png)
+![](img/img_1.png)
 
 # Профилирование
 ![](profiling/datefinder.png)
@@ -18,18 +18,18 @@
 Вывод: самый оптимальный вариант - slice_test
 
 # Разделенные по годам вакансии
-![img_2.png](img_2.png)
+![img_2.png](img/img_2.png)
 
 # Многопроцессорная обработка
 1) без нее
-![bmp.png](bmp.png)
+![bmp.png](img/bmp.png)
 2) с 16 процессами
-![16proc.png](16proc.png)
+![16proc.png](img/16proc.png)
 3) с 4 процессами
-![4proc.png](4proc.png)
+![4proc.png](img/4proc.png)
 
 # Результат работы с Concurrent futures
-![con-fut.png](con-fut.png)
+![con-fut.png](img/con-fut.png)
 
 # Частотность встречающихся валют 
-![frequency.png](frequency.png)
+![frequency.png](img/frequency.png)
