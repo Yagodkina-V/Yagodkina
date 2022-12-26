@@ -61,13 +61,12 @@ class ConvertVacancy:
 
     def make_csv_100(self):
         '''
-        создает csv-файл на 100 вакансий
+        создает csv-файл
         :return: csv-файл
         '''
         data = self.file_name.copy()
-        data = data.head(100)
         data['salary'] = data.apply(lambda x: self.get_salary_row(x), axis=1)
-        data[['name', 'salary', 'area_name', 'published_at']].to_csv('vacancies_with_converted_currency_for_341.csv', index=False)
+        data[['name', 'salary', 'area_name', 'published_at']].to_csv('con_vac.csv', index=False)
 
 
 file_name = 'vacancies_dif_currencies.csv'
