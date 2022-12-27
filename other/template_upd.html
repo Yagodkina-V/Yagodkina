@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }}}</title>
+    <style>
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center">Аналитика по профессии {{ name }}</h1>
+    <h2 style="text-align: center; margin-top: 30px">Статистика по профессии {{ name }} в городе {{ area }}</h2>
+    <table style="border-collapse: collapse; margin: 0 auto;">
+        <thead>
+            <tr>
+                <th>Год</th>
+                <th>Средняя зарплата</th>
+                <th>Количество вакансий</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in years_and_area %}
+            <tr>
+                <th>{{row[0]}}</th>
+                <th>{{row[1]}}</th>
+                <th>{{row[2]}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2 style="text-align: center">Статистика по городам</h2>
+    <table style="width: 47%; float: left; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Город</th>
+                <th>Средняя зарплата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in salary_by_city %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table style="width: 47%; float: right; border-collapse: collapse">
+        <thead>
+            <tr>
+                <th>Город</th>
+                <th>Доля вакансий</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in parts_city %}
+            <tr>
+                <th>{{row[0]}}</th>
+                <th>{{row[1]}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

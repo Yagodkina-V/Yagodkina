@@ -11,7 +11,7 @@ class Report:
     '''
     def __init__(self, file_name, profession):
         '''
-
+        Инициализирует класс Report
         :param file_name(DataFrame) : данные о вакансиях
         :param profession(str) : название выбранной профессии
         '''
